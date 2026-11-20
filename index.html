@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Found this paddle?</title>
+<meta name="description" content="Found this pickleball paddle? Send the owner a quick message.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='26' cy='24' rx='18' ry='21' fill='%2316a34a'/%3E%3Crect x='34' y='38' width='9' height='24' rx='4' transform='rotate(-40 38 50)' fill='%23334155'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23facc15'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f4f7f5; --card: #ffffff; --text: #0f172a; --muted: #5b6577;
+    --line: #dfe5e1; --accent: #16a34a; --accent-ink: #ffffff; --accent-soft: #e7f6ec;
+    --ball: #facc15; --error: #b42318; --shadow: 0 10px 30px rgba(15, 23, 42, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c1210; --card: #141c19; --text: #e8eeeb; --muted: #9aa8a1;
+      --line: #25302b; --accent: #22c55e; --accent-ink: #052e16; --accent-soft: #12261b;
+      --error: #f97066; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+  }
+  main { max-width: 460px; margin: 0 auto; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+  .hero { position: relative; aspect-ratio: 3 / 4; max-height: 58vh; width: 100%; background: var(--accent-soft); display: grid; place-items: center; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; display: block; }
+  .hero svg { width: 42%; height: auto; }
+  .badge {
+    position: absolute; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.92); color: #14532d; font-size: 13px; font-weight: 600;
+    padding: 6px 12px 6px 8px; border-radius: 999px; backdrop-filter: blur(6px);
+  }
+  .badge i { width: 14px; height: 14px; border-radius: 50%; background: var(--ball); box-shadow: inset 0 0 0 2px rgba(0,0,0,.08); }
+  .body { padding: 22px 20px 24px; }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.01em; }
+  .lead { color: var(--muted); margin: 0 0 22px; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 0 0 6px; }
+  label small { font-weight: 400; color: var(--muted); }
+  .field { margin-bottom: 16px; }
+  input, textarea {
+    width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  textarea { min-height: 112px; resize: vertical; }
+  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  button {
+    width: 100%; font: inherit; font-weight: 700; font-size: 17px; color: var(--accent-ink); background: var(--accent);
+    border: 0; border-radius: 14px; padding: 14px 18px; cursor: pointer; margin-top: 4px;
+    transition: transform .06s, filter .15s;
+  }
+  button:active { transform: scale(.99); }
+  button[disabled] { filter: grayscale(.4) opacity(.7); cursor: progress; }
+  .error { color: var(--error); font-size: 14px; margin: 10px 0 0; min-height: 1px; }
+  .note { color: var(--muted); font-size: 13px; text-align: center; margin: 18px 4px 0; }
+  .done { text-align: center; padding: 8px 0 4px; }
+  .done .tick {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; margin: 4px auto 14px;
+  }
+  .done h2 { margin: 0 0 6px; font-size: 22px; }
+  .done p { color: var(--muted); margin: 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <div class="hero">
+      <!-- Paddle photo goes here (paddle.jpg); the illustration shows until then. -->
+      <img id="photo" src="paddle.jpg" alt="The pickleball paddle this tag is attached to" onerror="this.remove(); document.getElementById('art').hidden = false;">
+      <svg id="art" hidden viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="52" cy="50" rx="40" ry="46" fill="#16a34a"/>
+        <ellipse cx="52" cy="50" rx="31" ry="37" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="3"/>
+        <rect x="64" y="84" width="16" height="50" rx="7" transform="rotate(-38 72 109)" fill="#334155"/>
+        <circle cx="100" cy="118" r="13" fill="#facc15"/>
+        <circle cx="96" cy="114" r="2" fill="#a16207"/><circle cx="104" cy="117" r="2" fill="#a16207"/><circle cx="99" cy="123" r="2" fill="#a16207"/>
+      </svg>
+      <span class="badge"><i></i>Lost &amp; found</span>
+    </div>
+
+    <div class="body">
+      <section id="formView">
+        <h1>Found this paddle?</h1>
+        <p class="lead">Thank you for picking it up! Leave a quick message and I'll get in touch to collect it.</p>
+
+        <form id="f" novalidate>
+          <div class="field">
+            <label for="name">Your name <small>(optional)</small></label>
+            <input id="name" name="name" autocomplete="name" maxlength="80">
+          </div>
+          <div class="field">
+            <label for="contact">How can I reach you?</label>
+            <input id="contact" name="contact" required autocomplete="tel" inputmode="email" maxlength="120" placeholder="Phone number or email">
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required maxlength="1500" placeholder="Where did you find it? Where can I pick it up?"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="website">Leave this empty</label>
+            <input id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <button id="send" type="submit">Send message</button>
+          <p class="error" id="err" role="alert"></p>
+        </form>
+      </section>
+
+      <section id="doneView" class="done" hidden>
+        <div class="tick" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <h2>Message sent — thank you!</h2>
+        <p>I'll be in touch soon. You're a good sport.</p>
+      </section>
+    </div>
+  </div>
+  <p class="note">Your message goes privately to the paddle's owner.</p>
+</main>
+
+<script>
+  // Google Form wiring. FORM_ID is the long id from the form's /d/e/<FORM_ID>/viewform link;
+  // the entry.* numbers are the form's question ids.
+  const GOOGLE_FORM = {
+    action: "https://docs.google.com/forms/d/e/1FAIpQLSePzHehoiIy6g9DZuOiSzTyoaeziKtNS6ezwkTGTq0c9YS_1g/formResponse",
+    fields: { name: "entry.1713835041", contact: "entry.1282707990", message: "entry.607081200" }
+  };
+
+  const f = document.getElementById("f"), err = document.getElementById("err"), btn = document.getElementById("send");
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    err.textContent = "";
+    const v = (id) => document.getElementById(id).value.trim();
+    if (v("website")) return;                       // bots fill the hidden field
+    if (!v("contact")) { err.textContent = "Please add a phone number or email so I can reach you."; return document.getElementById("contact").focus(); }
+    if (!v("message")) { err.textContent = "Please add a short message."; return document.getElementById("message").focus(); }
+
+    const body = new URLSearchParams();
+    for (const [key, entry] of Object.entries(GOOGLE_FORM.fields)) body.append(entry, v(key));
+    btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      // Google Forms doesn't send CORS headers, so the response is opaque; a network error still throws.
+      await fetch(GOOGLE_FORM.action, { method: "POST", mode: "no-cors", body });
+      document.getElementById("formView").hidden = true;
+      document.getElementById("doneView").hidden = false;
+    } catch (_) {
+      err.textContent = "Couldn't send — please check your connection and try again.";
+      btn.disabled = false; btn.textContent = "Send message";
+    }
+  });
+</script>
+</body>
+</html>
